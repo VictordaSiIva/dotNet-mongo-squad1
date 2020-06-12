@@ -3,28 +3,36 @@
   }
 
   *:focus {
+    overflow: hidden;
     outline: none;
   }
   body {
   font-family: Arial;
   background-color: #343a40;
 
-  padding: 50px;
+  padding: 125px;
   }
   .login {
-  margin: 20px auto;
+  /* margin: 10px auto; */
   width: 300px;
+
+  margin-left: 650px;
+ margin-bottom: -40%;
+
   }
   .login-screen {
   background-color: #FFF;
   padding: 20px;
-  border-radius: 5px
+  border-radius: 5px;
+
+
   }
 
   .app-title {
   text-align: center;
   color: #777;
   }
+
 
   .login-form {
   text-align: center;
@@ -77,3 +85,8 @@
     display: block;
     margin-top: 12px;
   }
+.image {
+margin-top: -10%;
+padding-bottom: 300px;
+
+}

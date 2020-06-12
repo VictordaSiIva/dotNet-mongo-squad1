@@ -6,6 +6,7 @@ import { ProfessorService } from '../services/professor/professor.service';
 
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +22,8 @@ export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
   constructor(private router: Router,
-    private professorService: ProfessorService) { }
+    private professorService: ProfessorService,
+    private toastr: ToastrService) { }
 
   ngOnInit(): void {
     const user = window.localStorage.getItem('prof')
@@ -49,8 +51,16 @@ export class LoginComponent implements OnInit {
       .subscribe(response => {
          const data = response;
 
+         if(data !== null)
+         {
+          this.toastr.success('Usuario logado com sucesso', 'Usuario');
          window.localStorage.setItem('prof', JSON.stringify(data) );
         this.router.navigateByUrl('/Home');
+         }
+         else{
+          this.toastr.error('E-mail ou senha incorreto!', 'Usuario');
+          this.router.navigateByUrl('/login');
+         }
 
       }, err => {
 

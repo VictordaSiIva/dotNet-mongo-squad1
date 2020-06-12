@@ -1,9 +1,10 @@
 <body>
   <form [formGroup]="loginForm" role="form" id="quickForm">
 	<div class="login">
+
 		<div class="login-screen">
 			<div class="app-title">
-				<h1>Login</h1>
+				<h1>TEACHER ADM</h1>
 			</div>
 
 			<div class="login-form">
@@ -19,8 +20,12 @@
 
         <a class="btn btn-primary btn-large btn-block" (click)="fazerLogin()" >Entrar</a><br/>
         <a class="btn btn-primary btn-large btn-block" [routerLink]="['/professor']" >Cadastrar</a>
-			</div>
-		</div>
+      </div>
+    </div>
   </div>
+      <div class="image">
+        <img width="550" src="../../assets/img/teacher.svg">
+        </div>
+
 </form>
 </body>

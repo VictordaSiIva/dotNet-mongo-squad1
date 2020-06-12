@@ -45,11 +45,11 @@ export class ProfessorComponent implements OnInit {
 
   save() {
 
-    const getNome = this.professorForm.get('senha').value
-    const getSobrenome = this.professorForm.get('confirmarSenha').value
+    const getSenha = this.professorForm.get('senha').value
+    const getConfirmar = this.professorForm.get('confirmarSenha').value
 
-    if (getNome === getSobrenome &&
-      (getNome !== null || getSobrenome !== null))
+    if (getSenha === getConfirmar &&
+      (getSenha !== null || getConfirmar !== null))
     {
 
     this.professor = Object.assign({}, {
