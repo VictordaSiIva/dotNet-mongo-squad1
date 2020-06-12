@@ -58,7 +58,7 @@ const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: 'Home'
+    redirectTo: 'login'
   }
 ]
 
