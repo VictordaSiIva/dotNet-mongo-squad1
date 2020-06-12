@@ -10,8 +10,15 @@ import { AtividadesComponent } from './atividades/atividades.component';
 import { HomeComponent } from './home/home.component';
 import { TurmaComponent } from './turma/turma.component';
 import { TurmasComponent } from './turmas/turmas.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DataTablesModule } from 'angular-datatables';
+import { RouterModule } from '@angular/router';
+import { ProfessorComponent } from './professor/professor.component';
+import { LoginComponent } from './login/login.component';
+
+
+
 
 @NgModule({
   declarations: [
@@ -22,14 +29,18 @@ import { HttpClientModule } from '@angular/common/http';
     AtividadesComponent,
     TurmaComponent,
     TurmasComponent,
-    HomeComponent
+    HomeComponent,
+    ProfessorComponent,
+    LoginComponent
   ],
   imports: [
+    DataTablesModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    RouterModule
   ],
   providers: [],
   bootstrap: [AppComponent]

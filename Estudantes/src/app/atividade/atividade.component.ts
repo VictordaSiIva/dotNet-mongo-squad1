@@ -39,14 +39,25 @@ export class AtividadeComponent implements OnInit {
       descricao: new FormControl(null)
     });
 
+    const id = this.route.snapshot.params['id'];
+
+    if(id)
+    {
+      this.getActivity(id)
+    }
+
   }
 
 
-  getActivity(nome: string) {
-    this.service.getActivity(nome)
+  getActivity(id: string) {
+    this.service.getActivity(id)
       .pipe(takeUntil(this.ngGetActivityUnsubscribe))
       .subscribe(response => {
-        this.atividade = response.data;
+        const data = response;
+        this.atividade = JSON.parse(JSON.stringify(data))
+
+        this.atividadeForm.controls['nome'].setValue(this.atividade.nome)
+        this.atividadeForm.controls['descricao'].setValue(this.atividade.descricao)
 
       }, err => {
 
@@ -54,7 +65,6 @@ export class AtividadeComponent implements OnInit {
   }
 
   save() {
-
 
     if (!this.atividade.id) {
       this.atividade = Object.assign({}, {
@@ -73,10 +83,17 @@ export class AtividadeComponent implements OnInit {
       .pipe(takeUntil(this.ngGetActivityUnsubscribe))
       .subscribe(_ => {
 
+
       }, err => {
       });
+
+      this.router.navigateByUrl('/atividades').then(e => {
+        if (e) {
+          console.log("Navigation is successful!");
+        } else {
+          console.log("Navigation has failed!");
+        }
+      });
   }
-
-
-
 }
+

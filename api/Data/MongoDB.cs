@@ -39,6 +39,7 @@ namespace Api.Data
             {
                 BsonClassMap.RegisterClassMap<Estudante>(i =>
                 {
+                    i.MapIdField(x => x.Id).SetIdGenerator(StringObjectIdGenerator.Instance).SetSerializer(new StringSerializer(BsonType.ObjectId));
                     i.AutoMap();
                     i.SetIgnoreExtraElements(true);
                 });
@@ -48,6 +49,15 @@ namespace Api.Data
                 BsonClassMap.RegisterClassMap<Atividade>(i =>
                 {
                     i.MapIdField(x => x.id).SetIdGenerator(StringObjectIdGenerator.Instance).SetSerializer(new StringSerializer(BsonType.ObjectId));
+                    i.AutoMap();
+                    i.SetIgnoreExtraElements(true);
+                });
+            }
+            if (!BsonClassMap.IsClassMapRegistered(typeof(Professor)))
+            {
+                BsonClassMap.RegisterClassMap<Professor>(i =>
+                {
+                    i.MapIdField(x => x.Id).SetIdGenerator(StringObjectIdGenerator.Instance).SetSerializer(new StringSerializer(BsonType.ObjectId));
                     i.AutoMap();
                     i.SetIgnoreExtraElements(true);
                 });
