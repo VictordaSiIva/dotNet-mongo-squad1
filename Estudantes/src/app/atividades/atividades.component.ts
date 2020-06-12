@@ -4,7 +4,9 @@ import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Atividade } from '../Shared/atividade.interfaces';
+import { Professor } from '../Shared/professor.interfaces';
 import { AtividadeService } from '../services/atividades/atividade.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-atividades',
@@ -14,6 +16,10 @@ import { AtividadeService } from '../services/atividades/atividade.service';
   '../../plugins/fontawesome-free/css/all.min.css']
 })
 export class AtividadesComponent implements OnInit, OnDestroy, AfterViewInit  {
+
+  getProf: string = window.localStorage.getItem('prof');
+
+  professor: Professor = JSON.parse( this.getProf);
 
   @ViewChild(DataTableDirective, { static: false }) datatableElementAtividade: DataTableDirective;
   isDtInitialized = false;
@@ -54,7 +60,8 @@ export class AtividadesComponent implements OnInit, OnDestroy, AfterViewInit  {
   private ngDeleteAtividadesUnsubscribe = new Subject();
 
   constructor(private router: Router,
-    private service: AtividadeService) { }
+    private service: AtividadeService,
+    private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.search()
@@ -78,8 +85,20 @@ export class AtividadesComponent implements OnInit, OnDestroy, AfterViewInit  {
   }
 
 
+  Logout()
+  {
+    window.localStorage.getItem('prof')
+
+    window.localStorage.removeItem('prof');
+
+    this.router.navigateByUrl('/login');
+  }
 
   ngAfterViewInit(): void {
+    if(this.professor == undefined)
+    {
+      this.router.navigateByUrl('/login');
+    }
     this.dtTriggerAtividade.next();
   }
 
@@ -106,9 +125,10 @@ export class AtividadesComponent implements OnInit, OnDestroy, AfterViewInit  {
 
       window.setTimeout(() => {
 
+        this.toastr.success('Atividade excluida com sucesso', 'Atividade');
         this.rerender();
         this.search();
-      },10);
+      },800);
 
   }
 

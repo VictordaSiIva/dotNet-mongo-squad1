@@ -1,5 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
+import { CommonModule } from '@angular/common';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -18,8 +21,6 @@ import { ProfessorComponent } from './professor/professor.component';
 import { LoginComponent } from './login/login.component';
 
 
-
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -34,6 +35,11 @@ import { LoginComponent } from './login/login.component';
     LoginComponent
   ],
   imports: [
+    CommonModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot({
+      toastClass: 'toast toast-bootstrap-compatibility-fix'
+    }),
     DataTablesModule,
     HttpClientModule,
     FormsModule,

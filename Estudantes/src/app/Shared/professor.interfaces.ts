@@ -1,7 +1,7 @@
 export interface Professor {
   id: string
   nome: string;
-  sobrenome: string;
+  sobreNome: string;
   email: string;
   senha: string
 

@@ -24,11 +24,17 @@ export class LoginComponent implements OnInit {
     private professorService: ProfessorService) { }
 
   ngOnInit(): void {
+    const user = window.localStorage.getItem('prof')
     this.loginForm = new FormGroup({
       email: new FormControl(null),
       senha: new FormControl(null),
 
     });
+
+    if( user !== null)
+    {
+      this.router.navigateByUrl('/Home')
+    }
   }
 
   fazerLogin() {
@@ -42,6 +48,9 @@ export class LoginComponent implements OnInit {
     this.professorService.fazerLogin(this.login)
       .subscribe(response => {
          const data = response;
+
+         window.localStorage.setItem('prof', JSON.stringify(data) );
+        this.router.navigateByUrl('/Home');
 
       }, err => {
 

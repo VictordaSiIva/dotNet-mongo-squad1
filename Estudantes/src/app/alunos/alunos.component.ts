@@ -5,6 +5,8 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Aluno } from '../Shared/aluno.interfaces';
 import { AlunoService } from '../services/alunos/aluno.service';
+import { Professor } from '../Shared/professor.interfaces';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-alunos',
@@ -13,7 +15,11 @@ import { AlunoService } from '../services/alunos/aluno.service';
    '../../dist/css/adminlte.min.css',
   '../../plugins/fontawesome-free/css/all.min.css']
 })
-export class AlunosComponent implements OnInit {
+export class AlunosComponent implements OnInit, AfterViewInit {
+
+  getProf: string = window.localStorage.getItem('prof');
+
+  professor: Professor = JSON.parse( this.getProf);
 
   @ViewChild(DataTableDirective, { static: false }) datatableElementAluno: DataTableDirective;
   isDtInitialized = false;
@@ -54,11 +60,13 @@ export class AlunosComponent implements OnInit {
   private ngDeleteAlunosUnsubscribe = new Subject();
 
   constructor(private router: Router,
-    private service: AlunoService) { }
+    private service: AlunoService,
+    private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.search()
   }
+
 
   search() {
 
@@ -79,11 +87,15 @@ export class AlunosComponent implements OnInit {
 
 
   ngAfterViewInit(): void {
+    if(this.professor == undefined)
+    {
+      this.router.navigateByUrl('/login');
+    }
     this.dtTriggerAluno.next();
   }
 
   confirmDelete(id: string) {
-    const isDeleting = confirm('Você realmente deseja apagar esta atividade ?');
+    const isDeleting = confirm('Você realmente deseja apagar este aluno ?');
     if (!isDeleting) {
       return;
     }
@@ -105,12 +117,23 @@ export class AlunosComponent implements OnInit {
 
       window.setTimeout(() => {
 
+        this.toastr.success('Aluno excluido com sucesso', 'Aluno');
         this.rerender();
         this.search();
-      },10);
+
+      },800);
 
   }
 
+
+  Logout()
+  {
+    window.localStorage.getItem('prof')
+
+    window.localStorage.removeItem('prof');
+
+    this.router.navigateByUrl('/login');
+  }
 
   rerender(): void {
     this.datatableElementAluno.dtInstance.then((dtInstance: DataTables.Api) => {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -9,6 +9,8 @@ import { Aluno } from '../Shared/aluno.interfaces';
 import { Atividade } from '../Shared/atividade.interfaces';
 import { AtividadeService } from '../services/atividades/atividade.service';
 import { AlunoService } from '../services/alunos/aluno.service';
+import { Professor } from '../Shared/professor.interfaces';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-aluno',
@@ -18,7 +20,11 @@ import { AlunoService } from '../services/alunos/aluno.service';
    '../../dist/css/adminlte.min.css'
   ]
 })
-export class AlunoComponent implements OnInit {
+export class AlunoComponent implements OnInit, AfterViewInit {
+
+  getProf: string = window.localStorage.getItem('prof');
+
+  professor: Professor = JSON.parse( this.getProf);
 
   private ngGetAlunoUnsubscribe = new Subject();
 
@@ -43,7 +49,8 @@ export class AlunoComponent implements OnInit {
   constructor(private router: Router,
               private route: ActivatedRoute,
               private ativadeService: AtividadeService,
-              private alunoService: AlunoService
+              private alunoService: AlunoService,
+              private toastr: ToastrService
     ) { }
 
   ngOnInit(): void {
@@ -66,6 +73,13 @@ this.search();
     this.getAluno(id)
   }
 
+  }
+
+  ngAfterViewInit() {
+    if(this.professor == undefined)
+    {
+      this.router.navigateByUrl('/login');
+    }
   }
 
   getAluno(id: string) {
@@ -110,6 +124,15 @@ this.search();
 
     this.atividadesSelecionadas.splice(index, 1);
 
+  }
+
+  Logout()
+  {
+    window.localStorage.getItem('prof')
+
+    window.localStorage.removeItem('prof');
+
+    this.router.navigateByUrl('/login');
   }
 
 
@@ -162,6 +185,7 @@ this.search();
       }, err => {
       });
 
+      this.toastr.success('Aluno cadastrado com sucesso', 'Aluno');
       this.router.navigateByUrl('/alunos').then(e => {
         if (e) {
           console.log("Navigation is successful!");

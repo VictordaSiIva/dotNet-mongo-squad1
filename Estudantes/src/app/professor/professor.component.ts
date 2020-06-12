@@ -22,7 +22,7 @@ export class ProfessorComponent implements OnInit {
   professor: Professor = {
     id:'',
     nome: '',
-    sobrenome: '',
+    sobreNome: '',
     email: '',
     senha:''
   };
@@ -55,7 +55,7 @@ export class ProfessorComponent implements OnInit {
     this.professor = Object.assign({}, {
       id: '',
       nome: this.professorForm.get('nome').value,
-      sobrenome: this.professorForm.get('sobrenome').value,
+      sobreNome: this.professorForm.get('sobrenome').value,
       email: this.professorForm.get('email').value,
       senha: this.professorForm.get('senha').value,
 
